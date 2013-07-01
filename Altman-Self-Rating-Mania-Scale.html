@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8" />
+
+	<title>Altman Self-Rating Mania Scale (ASRM)</title>
+
+    <link type="text/css" rel="stylesheet" href="http://dl.dropbox.com/u/10170121/www/base.css"/>
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>	
+	<script>
+	
+		$(document).ready(function() {
+		    $('.JS_toggle').click(function(){
+		        $($(this).attr('rel')).toggle();
+		    });
+		
+			
+			var $Form = $('form');
+			
+	        $Form.find('[name="date"]').each(function() {
+		        if (this.value === '') {
+					var oDate = new Date();
+		            this.value = oDate.toDateString() ;
+		        }
+	        });
+
+			
+			$Form.bind('submit', function(p_oEvent){
+				p_oEvent.preventDefault();
+				
+				var $Radios = $Form.find('input:radio:checked');
+				if($Radios.length !== 5){
+					alert('Please rate all groups of statements before trying to calculate your scores');
+				}else{
+					var iScore = 0;
+					$Radios.each(function(){
+						iScore += parseInt($(this).val(), 10);
+					});
+					
+					// 6 or higher indicates a 
+					if(iScore < 6){
+						sMessage = 'it is less likely that you are displaying significant symptoms of mania.'					
+					}else{
+						sMessage = 
+							  'there is a high probability of a manic or hypomanic condition. '
+							+ 'It may indicate a need for treatment and/or further diagnostic workup to confirm a diagnosis of mania or hypomania.'
+						;
+					}
+					var bResult = window.confirm(
+						  'Your score is ' + iScore 
+					  	+ '\n\n' 
+						+ 'This means ' + sMessage
+					  	+ '\n\n' 
+					  	+ ' Press [OK] to save your score for future reference'
+					);
+					if(bResult){
+						alert('@TODO: Save score to Couch DB + Additional logic');
+					}
+				}
+			});
+		});
+		</script>	
+
+	<style>
+		h2 span {
+			font-size:50%;
+		}
+		
+		#overview {
+			display: none;
+		}
+		
+		#questionnaire ol {
+			counter-reset: question;
+		}
+
+		#questionnaire li {
+			margin-top: 1em;
+			list-style: none;
+			counter-increment: question;
+		}
+		
+		#questionnaire li:before {
+			content: "Question " counter(question);
+			font-weight: bold;
+		}
+		
+		#questionnaire label {
+			display:block;
+		}		
+	</style>
+</head>
+
+<body>
+<div class="container">
+	<h1>Altman Self-Rating Mania Scale (ASRM)</h1>
+
+	<h2>Overview <span class="JS_toggle" rel="#overview">Click to Show/Hide</span></h2>
+	<div id="overview">
+		<ul>
+			<li>The ASRM is a 5-item self rating mania scale, designed to assess the presence and/or severity of manic symptoms.
+			<li>The ASRM may be used in an inpatient or outpatient setting to screen for the presence of and/or severity of manic symptoms for clinical or research purposes.
+			<li>Because it is compatible with DSM-IV criteria, and correlates significantly with Clinician-Administered Rating Scale for Mania (CARS-M), Young Mania Rating Scale (YMRS), it can be used effectively as a screening instrument to facilitate diagnostic assessment inpatients with hypomanic symptoms.
+		</ul>
+
+		<h3>Clinical Utility</h3>
+		<ul>
+			<li>In outpatient settings the ASRM may be used as a psycho-educational tool to help patients recognize and monitor their own symptoms.
+			<li>It may be used reliably as a self-report measure of efficacy for patients receiving clinical treatment.
+			<li>It may be used in combination with self-rating depression scales to assess mixed states of mania and depression.
+		</ul>
+
+		<h3>Scoring</h3>
+		<ol>
+			<li>Sum items 1-5
+				<ul>
+					<li>A cutoff score of 6 or higher indicates a high probability of a manic or hypomanic condition (based on a sensitivity rating of 85.5% and a specificity rating of 87.3%).
+					<li>A score of 6 or higher may indicate a need for treatment and/or further diagnostic workup to confirm a diagnosis of mania or hypomania.
+					<li>A score of 5 or lower is less likely to be associated with significant symptoms of mania.
+				</ul>
+			</li>			
+			<li>As a self-report measure of clinical efficacy, items 1-5 should be summed to give a total score, which then may be compared to subsequent total scores during and after treatment.</li>
+		</ol>
+	
+		<h3>Psychometric Properties</h3>
+		<p>
+			Specificity of 85.5<br/>
+			Sensitivity of 87.31<sup><a href="#footnote_1" id="remark_1">1</a></sup>
+		</p>
+	</div>
+	
+	<h2>Questionnaire</h2>
+	<form>
+	
+		<label>
+			Name 
+			<input type="text" name="name"/>
+		</label>
+	
+		<label>
+			Date:
+			<input type="text" name="date"/>
+		</label>
+	
+		<h3>Instructions:</h3>
+		<ol>
+			<li>There are 5 statements groups on this questionnaire: read each group of statements carefully.</li>
+			<li>Choose the one statement in each group that best describes the way you have been feeling for the past week or day (depending on the frequency of your measurements).</li>
+			<li>Check the box next to the number/statement selected.</li>
+			<li>Once you have rated all statements, press the button underneath the questionnaire.</li>
+			<li>Please note: The word “occasionally” when used here means once or twice; “often” means several times or more and “frequently” means most of the time.</li>
+		</ol>
+	
+		<ol id="questionnaire">
+			<li>
+				<label><input type="radio" name="question_1" value="0">I do not feel happier or more cheerful than usual.</label>
+				<label><input type="radio" name="question_1" value="1">I occasionally feel happier or more cheerful than usual.</label>
+				<label><input type="radio" name="question_1" value="2">I often feel happier or more cheerful than usual.</label>
+				<label><input type="radio" name="question_1" value="3">I feel happier or more cheerful than usual most of the time.</label>
+				<label><input type="radio" name="question_1" value="4">I feel happier or more cheerful than usual all of the time.</label>
+			</li>
+			<li>	
+				<label><input type="radio" name="question_2" value="0">I do not feel more self-confident than usual.</label>
+				<label><input type="radio" name="question_2" value="1">I occasionally feel more self-confident than usual.</label>
+				<label><input type="radio" name="question_2" value="2">I often feel more self-confident than usual.</label>
+				<label><input type="radio" name="question_2" value="3">I feel more self-confident than usual.</label>
+				<label><input type="radio" name="question_2" value="4">I feel extremely self-confident all of the time.</label>
+			</li>
+			<li>
+				<label><input type="radio" name="question_3" value="0">I do not need less sleep than usual.</label>
+				<label><input type="radio" name="question_3" value="1">I occasionally need less sleep than usual.</label>
+				<label><input type="radio" name="question_3" value="2">I often need less sleep than usual.</label>
+				<label><input type="radio" name="question_3" value="3">I frequently need less sleep than usual.</label>
+				<label><input type="radio" name="question_3" value="4">I can go all day and night without any sleep and still not feel tired.</label>
+			</li>
+			<li>
+				<label><input type="radio" name="question_4" value="0">I do not talk more than usual.</label>
+				<label><input type="radio" name="question_4" value="1">I occasionally talk more than usual.</label>
+				<label><input type="radio" name="question_4" value="2">I often talk more than usual.</label>
+				<label><input type="radio" name="question_4" value="3">I frequently talk more than usual.</label>
+				<label><input type="radio" name="question_4" value="4">I talk constantly and cannot be interrupted</label>
+			</li>
+			<li>
+				<label><input type="radio" name="question_5" value="0">I have not been more active (either socially, sexually, at work, home or school) than usual.</label>
+				<label><input type="radio" name="question_5" value="1">I have occasionally been more active than usual.</label>
+				<label><input type="radio" name="question_5" value="2">I have often been more active than usual</label>
+				<label><input type="radio" name="question_5" value="3">I have frequently been more active than usual.</label>
+				<label><input type="radio" name="question_5" value="4">I am constantly active or on the go all the time.</label>
+			</li>
+		</ol>
+		
+		<button type="submit">Calculate my Score</button>
+	</form>
+	<i>Permission for use granted by EG Altman, MD</i>
+</div>
+
+<p id="footnote_1"><a href="#remark_1">1.</a>  Altman EG, Hedeker D, Peterson JL, Davis JM. The Altman self-rating mania scale. Society of Biological Psychiatry 1997; 42:948-955.</p>
+</body>
