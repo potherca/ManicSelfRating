@@ -1,104 +1,103 @@
 <!DOCTYPE html>
-
+<html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
 
-	<title>Altman Self-Rating Mania Scale (ASRM)</title>
+    <title>Altman Self-Rating Mania Scale (ASRM)</title>
 
-    <link type="text/css" rel="stylesheet" href="https://potherca.github.io/CssBase/css/base.css"/>
+    <link href="https://potherca.github.io/CssBase/css/base.css" rel="stylesheet" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.JS_toggle').click(function(){
+                $($(this).attr('rel')).toggle();
+            });
+
+            var $Form = $('form');
+
+            if ($Form.length === 1) {
+                $Form.find('[name="date"]').each(function() {
+                    if (this.value === '') {
+                        var oDate = new Date();
+                        this.value = oDate.toDateString() ;
+                    }
+                });
+
+                $Form.bind('submit', function(p_oEvent){
+                    p_oEvent.preventDefault();
+
+                    var $Radios = $Form.find('input:radio:checked');
+
+                    if($Radios.length !== 5){
+                        alert('Please rate all groups of statements before trying to calculate your scores');
+                    }else{
+                        var iScore = 0;
+                        $Radios.each(function(){
+                            iScore += parseInt($(this).val(), 10);
+                        });
     
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>	
-	<script>
-	
-		$(document).ready(function() {
-		    $('.JS_toggle').click(function(){
-		        $($(this).attr('rel')).toggle();
-		    });
-		
-			
-			var $Form = $('form');
-			
-			if ($Form.length === 1) {
-    	        $Form.find('[name="date"]').each(function() {
-    		        if (this.value === '') {
-    					var oDate = new Date();
-    		            this.value = oDate.toDateString() ;
-    		        }
-    	        });
-    
-    			
-    			$Form.bind('submit', function(p_oEvent){
-    				p_oEvent.preventDefault();
-    				
-    				var $Radios = $Form.find('input:radio:checked');
-    				if($Radios.length !== 5){
-    					alert('Please rate all groups of statements before trying to calculate your scores');
-    				}else{
-    					var iScore = 0;
-    					$Radios.each(function(){
-    						iScore += parseInt($(this).val(), 10);
-    					});
-    					
-    					// 6 or higher indicates a 
-    					if(iScore < 6){
-    						sMessage = 'it is less likely that you are displaying significant symptoms of mania.'					
-    					}else{
-    						sMessage = 
-    							  'there is a high probability of a manic or hypomanic condition. '
-    							+ 'It may indicate a need for treatment and/or further diagnostic workup to confirm a diagnosis of mania or hypomania.'
-    						;
-    					}
-    					var bResult = window.confirm(
-    						  'Your score is ' + iScore 
-    					  	+ '\n\n' 
-    						+ 'This means ' + sMessage
-    					  	// + '\n\n' 
-    					  	// + ' Press [OK] to save your score for future reference'
-    					);
-    				// 	if(bResult){
-    				// 		alert('@TODO: Save score to Couch DB + Additional logic');
-    				// 	}
-    				}
-    			});
-			}
-		});
-		</script>	
+                        if(iScore < 6){
+                            sMessage = 'it is less likely that you are displaying significant symptoms of mania.'                   
+                        }else{
+                            sMessage = 
+                                  'there is a high probability of a manic or hypomanic condition. '
+                                + 'It may indicate a need for treatment and/or further diagnostic workup to confirm a diagnosis of mania or hypomania.'
+                            ;
+                        }
+                        var bResult = window.confirm(
+                              'Your score is ' + iScore 
+                            + '\n\n' 
+                            + 'This means ' + sMessage
+                            // + '\n\n' 
+                            // + ' Press [OK] to save your score for future reference'
+                        );
+                    //  if(bResult){
+                    //      alert('@TODO: Save score to Couch DB + Additional logic');
+                    //  }
+                    }
+                });
+            }
+        });
+    </script>
 
-	<style>
-		h2 span {
-			font-size:50%;
-		}
-		
-		#overview {
-			display: none;
-		}
-		
-		#questionnaire ol {
-			counter-reset: question;
-		}
+    <style>
+        h2 span {
+            font-size:50%;
+        }
 
-		#questionnaire li {
-			margin-top: 1em;
-			list-style: none;
-			counter-increment: question;
-		}
-		
-		#questionnaire li:before {
-			content: "Question " counter(question);
-			font-weight: bold;
-		}
-		
-		#questionnaire label {
-			display:block;
-		}		
-	</style>
+        #overview {
+            display: none;
+        }
+
+        #questionnaire ol {
+            counter-reset: question;
+        }
+
+        #questionnaire li {
+            margin-top: 1em;
+            list-style: none;
+            counter-increment: question;
+        }
+
+        #questionnaire li:before {
+            content: "Question " counter(question);
+            font-weight: bold;
+        }
+
+        #questionnaire label {
+            display:block;
+        }       
+    </style>
 </head>
 
 <body>
-    <h1>
-    	Altman Self-Rating Mania Scale (ASRM)
-    </h1>
+    <h1>Altman Self-Rating Mania Scale (ASRM)</h1>
+
     <div class="container">
         {{ content }}
     </div>
+
 </body>
+</html>
