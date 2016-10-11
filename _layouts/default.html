@@ -28,34 +28,38 @@
                 });
 
                 $Form.bind('submit', function(p_oEvent){
+                    var iScore, sMessage, sState, $Radios;
+
                     p_oEvent.preventDefault();
 
-                    var $Radios = $Form.find('input:radio:checked');
+                    $Radios = $Form.find('input:radio:checked');
 
                     if($Radios.length !== 5){
                         window.Sweetalert2(
                             'Form Incomplete',
                             'Please rate all groups of statements before trying to calculate your scores',
-                            'warning'
+                            'error'
                         );
                     }else{
-                        var iScore = 0;
+                        iScore = 0;
                         $Radios.each(function(){
                             iScore += parseInt($(this).val(), 10);
                         });
 
                         if(iScore < 6){
-                            sMessage = 'it is less likely that you are displaying significant symptoms of mania.'
+                            sMessage = 'it is less likely that you are displaying significant symptoms of mania.';
+                            sState = 'success';
                         }else{
                             sMessage =
                                   'there is a high probability of a manic or hypomanic condition. '
                                 + 'It may indicate a need for treatment and/or further diagnostic workup to confirm a diagnosis of mania or hypomania.'
                             ;
+                            sState = 'warning';
                         }
                         window.Sweetalert2(
                             'Your score is ' + iScore,
                             'This means ' + sMessage,
-                            'success'
+                            sState
                         );
                     }
                 });
