@@ -1,7 +1,7 @@
 ---
 ---
 
-<h2>Overview <span class="JS_toggle" rel="#overview">Click to Show/Hide</span></h2>
+<div class="swal2-icon swal2-question JS_toggle" rel="#overview">?</div>
 <div id="overview">
 	<ul>
 		<li>The ASRM is a 5-item self rating mania scale, designed to assess the presence and/or severity of manic symptoms.
@@ -24,7 +24,7 @@
 				<li>A score of 6 or higher may indicate a need for treatment and/or further diagnostic workup to confirm a diagnosis of mania or hypomania.
 				<li>A score of 5 or lower is less likely to be associated with significant symptoms of mania.
 			</ul>
-		</li>			
+		</li>
 		<li>As a self-report measure of clinical efficacy, items 1-5 should be summed to give a total score, which then may be compared to subsequent total scores during and after treatment.</li>
 	</ol>
 
@@ -33,13 +33,15 @@
 		Specificity of 85.5<br/>
 		Sensitivity of 87.31<sup><a href="#footnote_1" id="remark_1">1</a></sup>
 	</p>
+
+	<p id="footnote_1"><a href="#remark_1">1.</a>  Altman EG, Hedeker D, Peterson JL, Davis JM. The Altman self-rating mania scale. Society of Biological Psychiatry 1997; 42:948-955.</p>
 </div>
 
 <h2>Questionnaire</h2>
 <form>
 
 	<label>
-		Name 
+		Name
 		<input type="text" name="name"/>
 	</label>
 
@@ -65,7 +67,7 @@
 			<label><input type="radio" name="question_1" value="3">I feel happier or more cheerful than usual most of the time.</label>
 			<label><input type="radio" name="question_1" value="4">I feel happier or more cheerful than usual all of the time.</label>
 		</li>
-		<li>	
+		<li>
 			<label><input type="radio" name="question_2" value="0">I do not feel more self-confident than usual.</label>
 			<label><input type="radio" name="question_2" value="1">I occasionally feel more self-confident than usual.</label>
 			<label><input type="radio" name="question_2" value="2">I often feel more self-confident than usual.</label>
@@ -94,9 +96,7 @@
 			<label><input type="radio" name="question_5" value="4">I am constantly active or on the go all the time.</label>
 		</li>
 	</ol>
-	
-	<button type="submit">Calculate my Score</button>
+
+	<button type="submit" class="swal2-confirm styled">Calculate my Score</button>
 </form>
 <p><i>Permission for use granted by EG Altman, MD</i></p>
-
-<p id="footnote_1"><a href="#remark_1">1.</a>  Altman EG, Hedeker D, Peterson JL, Davis JM. The Altman self-rating mania scale. Society of Biological Psychiatry 1997; 42:948-955.</p>

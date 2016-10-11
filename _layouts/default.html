@@ -6,8 +6,10 @@
     <title>Altman Self-Rating Mania Scale (ASRM)</title>
 
     <link rel="stylesheet" href="https://sindresorhus.com/github-markdown-css/github-markdown.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/5.2.0/sweetalert2.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/5.2.0/sweetalert2.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -31,31 +33,30 @@
                     var $Radios = $Form.find('input:radio:checked');
 
                     if($Radios.length !== 5){
-                        alert('Please rate all groups of statements before trying to calculate your scores');
+                        window.Sweetalert2(
+                            'Form Incomplete',
+                            'Please rate all groups of statements before trying to calculate your scores',
+                            'warning'
+                        );
                     }else{
                         var iScore = 0;
                         $Radios.each(function(){
                             iScore += parseInt($(this).val(), 10);
                         });
-    
+
                         if(iScore < 6){
-                            sMessage = 'it is less likely that you are displaying significant symptoms of mania.'                   
+                            sMessage = 'it is less likely that you are displaying significant symptoms of mania.'
                         }else{
-                            sMessage = 
+                            sMessage =
                                   'there is a high probability of a manic or hypomanic condition. '
                                 + 'It may indicate a need for treatment and/or further diagnostic workup to confirm a diagnosis of mania or hypomania.'
                             ;
                         }
-                        var bResult = window.confirm(
-                              'Your score is ' + iScore 
-                            + '\n\n' 
-                            + 'This means ' + sMessage
-                            // + '\n\n' 
-                            // + ' Press [OK] to save your score for future reference'
+                        window.Sweetalert2(
+                            'Your score is ' + iScore,
+                            'This means ' + sMessage,
+                            'success'
                         );
-                    //  if(bResult){
-                    //      alert('@TODO: Save score to Couch DB + Additional logic');
-                    //  }
                     }
                 });
             }
@@ -69,14 +70,11 @@
             max-width: 980px;
             margin: 0 auto;
             padding: 45px;
+            position: relative;
         }
 
         h2 span {
             font-size:50%;
-        }
-
-        #overview {
-            display: none;
         }
 
         #questionnaire ol {
@@ -96,7 +94,21 @@
 
         #questionnaire label {
             display:block;
-        }       
+        }
+
+        .JS_toggle {
+            top: 0;
+            right: 0;
+            position: absolute;
+        }
+
+        #overview {
+            display: none;
+            color: rgb(135, 173, 189);
+            border: 0.35em solid rgb(201, 218, 225);
+            padding: 1em;
+            border-radius: 1em;
+        }
     </style>
 </head>
 
@@ -104,7 +116,7 @@
     <article class="markdown-body">
 
         <h1>Altman Self-Rating Mania Scale (ASRM)</h1>
-    
+
         <div class="container">
             {{ content }}
         </div>
